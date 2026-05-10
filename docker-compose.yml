@@ -1,0 +1,14 @@
+services:
+  bio-is:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: bio:1.0
+    container_name: bio-is
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/e2sc-is
+    stdin_open: true # keeps stdin open, equivalent to docker run -i
+    tty: true # allocates a pseudo-TTY, equivalent to docker run -t
+    command: /bin/bash

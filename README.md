@@ -8,18 +8,38 @@ This project is based on ```python==3.6``` and it requires ```Docker version >= 
 
 ## Installing
 
-Clone this repository in your machine. Execute the installation under the settings directory.
+Clone this repository in your machine. You can easily build the environment using Docker Compose (**Recommended**):
 
 ```
 git clone https://github.com/waashk/bio-is.git
+cd bio-is
+docker-compose build
+```
+
+Alternatively, you can use raw docker commands:
+```
 cd bio-is/settings/
 docker build -t bio:1.0 .
 ```
 
 ## Activating environment
 
+**Using Docker Compose (Recommended):**
+
+To start the environment in an interactive shell, simply run:
 ```
-cd ..
+docker-compose run --rm bio-is
+```
+
+Alternatively, if you want to start the environment in the background without an interactive shell:
+```
+docker-compose up -d
+```
+
+**Using raw Docker commands:**
+
+```
+cd .. # Ensure you are in the root directory (bio-is)
 docker run --rm --name bio-is -p 8888:8888 -v `pwd`:/bio-is -i -t bio:1.0 /bin/bash
 ```
 
