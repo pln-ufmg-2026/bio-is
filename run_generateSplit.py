@@ -10,7 +10,7 @@ import io
 import os
 import pandas as pd
 from collections import Counter
-from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc
+from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois
 
 import socket
 
@@ -42,9 +42,11 @@ def get_selector(method: str):
     if method == 'e2sc':   return e2sc.E2SC()
     if method == 'e2sc-1':   return e2sc.E2SC(alphaMode="exact", betaMode='iterative')
     if method == 'e2sc-2':   return e2sc.E2SC(alphaMode="approximated", betaMode='heuristic')
+    if method == 'bio-is':   return biois.BIOIS(beta=0.25, theta=0.50) # TODO change hyperparameters
 
-    return None
+    print(f"Unknown method: {method}")
 
+    exit()
 
 def get_selection(X, y, fold, args):
 
