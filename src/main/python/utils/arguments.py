@@ -3,6 +3,7 @@ from src.main.python.utils.general import str2bool
 from datetime import datetime
 import argparse
 import os
+from pathlib import Path
 import random
 
 
@@ -17,10 +18,11 @@ def check_if_split_exists(args):
 
     if os.path.exists(saida):
         print("Already exists selection output")
-        exit()
+        return True
+    return False
 
 
-def arguments():
+def arguments(args_list=None):
     # datasets/webkb/tfidf/ --splitdir datasets/webkb/ --outputdir output/webkb/cnn/
     parser = argparse.ArgumentParser(description='Generate baseline splits.')
     parser.add_argument('-d', '--dataset', type=str)
@@ -33,25 +35,24 @@ def arguments():
     parser.add_argument("--datain", required=True)
     parser.add_argument("--overwrite", default=0)
 
-    args = parser.parse_args()
+    args = parser.parse_args(args_list)
 
-    # args.inputdir=f'datasets/{args.dataset}/tfidf/'
-    args.inputdir = f'{args.datain}/{args.dataset}/{args.inputrep}/'
-    # args.splitdir=f'datasets/{args.dataset}/'
-    args.splitdir = f'{args.datain}/{args.dataset}/splits/'
-    # args.outputdir=f'outselection2/{args.dataset}/'
-    args.outputdir = f'{args.out}/selection/{args.dataset}/'
+    args.inputdir = str(Path(args.datain) / args.dataset / args.inputrep)
+    args.splitdir = str(Path(args.datain) / args.dataset / "splits")
+    args.outputdir = str(Path(args.out) / "selection" / args.dataset)
 
-    args.filename = f"{args.outputdir}/saida_{args.method}"
+    args.filename = str(Path(args.outputdir) / f"saida_{args.method}")
 
     args.start_time = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     print(args)
-    check_if_split_exists(args)
+    if check_if_split_exists(args):
+        return None, None
 
-    if not os.path.exists(args.outputdir):
+    output_path = Path(args.outputdir)
+    if not output_path.exists():
         print(f"Criando saida {args.outputdir}")
-        os.system("mkdir -p {}".format(args.outputdir))
+        output_path.mkdir(parents=True, exist_ok=True)
 
     with open(args.filename, "w") as arq:
         arq.write(f"{args.method}\n{args}\n")

@@ -10,6 +10,7 @@ import copy
 import pickle
 import gzip
 from sklearn.preprocessing import LabelEncoder
+from pathlib import Path
 
 def print_stats(folds, micro_list, macro_list):
     #print(micro_list)
@@ -32,18 +33,19 @@ def print_in_file(msg, filename):
 
 def get_data(inputdir, f):
 
+    input_path = Path(inputdir)
     X_train, y_train = load_svmlight_file(
-        inputdir+"train"+str(f)+".gz", dtype=np.float64)
+        str(input_path / f"train{f}.gz"), dtype=np.float64)
     X_test, y_test = load_svmlight_file(
-        inputdir+"test"+str(f)+".gz", dtype=np.float64)
+        str(input_path / f"test{f}.gz"), dtype=np.float64)
 
     # Same vector size
     if (X_train.shape[1] > X_test.shape[1]):
         X_test, y_test = load_svmlight_file(
-            inputdir+"test"+str(f)+".gz", dtype=np.float64, n_features=X_train.shape[1])
+            str(input_path / f"test{f}.gz"), dtype=np.float64, n_features=X_train.shape[1])
     elif (X_train.shape[1] < X_test.shape[1]):
         X_train, y_train = load_svmlight_file(
-            inputdir+"train"+str(f)+".gz", dtype=np.float64, n_features=X_test.shape[1])
+            str(input_path / f"train{f}.gz"), dtype=np.float64, n_features=X_test.shape[1])
 
     n_classes = int(max(np.max(y_train), np.max(y_test)))+1
 
@@ -55,7 +57,7 @@ def get_data(inputdir, f):
 
 
 def get_y_train(args, train_idx):
-    with open(os.path.join(args.splitdir, 'score.txt'), 'r') as arq:
+    with open(Path(args.splitdir) / 'score.txt', 'r') as arq:
         y = np.array(list(map(str.rstrip, arq.readlines())))
     y_train = y[train_idx]
     return y_train
@@ -101,12 +103,13 @@ def str2bool(v):
 
 
 def createPath(p):
-	if not path.exists(p):
-		os.makedirs(p)
+	path_obj = Path(p)
+	if not path_obj.exists():
+		path_obj.mkdir(parents=True, exist_ok=True)
 
 def load_splits_ids_for_is(args, DATAIN):
-	old_splits = load_splits_ids(f"{DATAIN}/split_{args.nfolds}.csv")
-	is_splits  = load_splits_ids(f"{args.path_selection}/{args.dataset}/split_{args.nfolds}_{args.ismethod}_idxinfold.csv")
+	old_splits = load_splits_ids(str(Path(DATAIN) / f"split_{args.nfolds}.csv"))
+	is_splits  = load_splits_ids(str(Path(args.path_selection) / args.dataset / f"split_{args.nfolds}_{args.ismethod}_idxinfold.csv"))
 	splits = []
 	for f in range(args.nfolds):
 		old_train, test_index = old_splits[f]

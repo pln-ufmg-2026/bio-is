@@ -9,6 +9,7 @@ import gc
 import io
 import os
 import pandas as pd
+from pathlib import Path
 from collections import Counter
 from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois
 
@@ -17,7 +18,7 @@ import socket
 import logging
 import logging.config
 
-logging.config.fileConfig('settings/logging.conf', defaults={'logfilename': f'resources/logs/{socket.gethostname()}.log'})
+logging.config.fileConfig(Path('settings') / 'logging.conf', defaults={'logfilename': str(Path('resources') / 'logs' / f'{socket.gethostname()}.log')})
 logger = logging.getLogger(__name__)
 
 def get_selector(method: str):
@@ -64,15 +65,19 @@ def get_selection(X, y, fold, args):
     return selector.sample_indices_
 
 
-def main():
+def main(args_list=None):
 
     gc.collect()
 
-    args, info = arguments()
+    result = arguments(args_list)
+    if result == (None, None):
+        return
+    args, info = result
     logger.info(str(args))
 
-    print(f"{args.splitdir}/split_{args.folds}.pkl")
-    splits_df = get_splits(f"{args.splitdir}/split_{args.folds}.pkl")
+    split_file = str(Path(args.splitdir) / f"split_{args.folds}.pkl")
+    print(split_file)
+    splits_df = get_splits(split_file)
 
     splits_to_save = {c: [] for c in splits_df.columns if c.endswith("idxs")}
        
@@ -110,7 +115,7 @@ def main():
 
     splits_to_save_df = pd.DataFrame(data=splits_to_save)
 
-    filename = f"{args.outputdir}/split_{args.folds}_{args.method}_idxinfold.pkl"
+    filename = str(Path(args.outputdir) / f"split_{args.folds}_{args.method}_idxinfold.pkl")
 
     checkpoint_splits(
         splits_df=splits_to_save_df,
@@ -129,7 +134,7 @@ def main():
         save_results(args, info)
     
     print("END")
-    exit()
+    return
 
 
 if __name__ == '__main__':

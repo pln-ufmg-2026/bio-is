@@ -6,7 +6,7 @@ warnings.simplefilter("always", InstanceReductionWarning)
 
 from sklearn.base import BaseEstimator
 from abc import ABCMeta, abstractmethod
-from sklearn.externals import six
+import six
 
 class InstanceSelectionBase(six.with_metaclass(ABCMeta, BaseEstimator)):
     @abstractmethod
