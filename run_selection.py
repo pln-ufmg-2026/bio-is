@@ -10,7 +10,10 @@ def main():
     # You can expand these lists with more datasets and algorithms
     datasets = [
         "aisopos_ntua_2L",
-        # Add more datasets here
+        "mr",
+        "subj",
+        "vader_movie_2L",
+        "pang_movie_2L"
     ]
     
     methods = [
