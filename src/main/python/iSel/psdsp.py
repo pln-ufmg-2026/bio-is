@@ -80,7 +80,7 @@ class PSDSP(InstanceSelectionMixin):
 
     def extractPrototype(self, ri, X_tmp):
 
-        c = np.mean(X_tmp[ri], axis=0)[0]
+        c = np.asarray(np.mean(X_tmp[ri], axis=0))
 
         dist = np.inf
         idx = -1

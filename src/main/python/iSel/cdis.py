@@ -69,8 +69,8 @@ class CDIS(InstanceSelectionMixin):
         for i in range(X.shape[0]):
 
             if X[self.pkn[i]].shape[0] > 0:
-                centroid_pkn_x = np.mean(X[self.pkn[i]], axis=0)
-                self.dist_x_to_centroid_pkn[i] = euclidean_distances(X[i], centroid_pkn_x)[0]
+                centroid_pkn_x = np.asarray(np.mean(X[self.pkn[i]], axis=0))
+                self.dist_x_to_centroid_pkn[i] = euclidean_distances(X[i], centroid_pkn_x)[0][0]
             else:
                 centroid_pkn_x = X[i]
                 self.dist_x_to_centroid_pkn[i] = 0.0
