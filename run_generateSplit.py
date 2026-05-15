@@ -62,10 +62,12 @@ def get_selection(X, y, fold, args):
 
     logger.info("Result: ", Counter(y[selector.sample_indices_]))
 
-    return selector.sample_indices_
+    entropy = getattr(selector, 'entropy_', None)
+
+    return selector.sample_indices_, entropy
 
 
-def main(args_list=None):
+def main(args_list=None, debug=False):
 
     gc.collect()
 
@@ -80,6 +82,7 @@ def main(args_list=None):
     splits_df = get_splits(split_file)
 
     splits_to_save = {c: [] for c in splits_df.columns if c.endswith("idxs")}
+    splits_to_save['entropy'] = []
        
     #for f in range(args.folds):
     for f in range(1):
@@ -95,7 +98,7 @@ def main(args_list=None):
 
         ti = time.time()
 
-        idxs_docs = get_selection(X_train, y_train, f, args)
+        idxs_docs, entropy = get_selection(X_train, y_train, f, args)
 
         s = len(y_train[idxs_docs])
         r = (t-s)/t
@@ -107,6 +110,7 @@ def main(args_list=None):
         info['reducion'].append(r)
 
         splits_to_save['train_idxs'].append(idxs_docs)
+        splits_to_save['entropy'].append(entropy)
 
     logger.info(f"time: {np.mean(info['time_for_reduce'])}")
     logger.info(f"time std: {np.std(info['time_for_reduce'])}")
@@ -132,6 +136,16 @@ def main(args_list=None):
 
     if args.save:
         save_results(args, info)
+
+    if debug:
+        print("\n--- DEBUG INFO ---")
+        print(f"splits_to_save_df shape: {splits_to_save_df.shape}")
+        print("splits_to_save_df head:")
+        print(splits_to_save_df.head())
+        print(f"\nsplits_to_save_df_traslated shape: {splits_to_save_df_traslated.shape}")
+        print("splits_to_save_df_traslated head:")
+        print(splits_to_save_df_traslated.head())
+        print("------------------\n")
     
     print("END")
     return

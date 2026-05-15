@@ -161,8 +161,11 @@ class BIOIS(InstanceSelectionMixin):
         print("identifyNoiseByLowerNNEntropy")
         wrongpredictedIdx = y != self._pred
        
-        nnentropy = [stats.entropy(_) for _ in self._probaEveryone[wrongpredictedIdx]]
-        nnentropy = np.array(nnentropy)
+        # Calculate and store entropy for ALL instances by index
+        self.entropy_ = stats.entropy(self._probaEveryone, axis=1)
+
+        # Get entropy only for misclassified instances
+        nnentropy = self.entropy_[wrongpredictedIdx]
 
         nnentropy = (nnentropy-nnentropy.min())/(nnentropy.max()-nnentropy.min())
         nnentropy = 1. - nnentropy
