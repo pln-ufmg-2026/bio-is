@@ -139,12 +139,26 @@ def main(args_list=None, debug=False):
 
     if debug:
         print("\n--- DEBUG INFO ---")
-        print(f"splits_to_save_df shape: {splits_to_save_df.shape}")
-        print("splits_to_save_df head:")
-        print(splits_to_save_df.head())
-        print(f"\nsplits_to_save_df_traslated shape: {splits_to_save_df_traslated.shape}")
-        print("splits_to_save_df_traslated head:")
-        print(splits_to_save_df_traslated.head())
+        
+        def print_df_debug_info(df, name):
+            print(f"\n{name} shape: {df.shape}")
+            print(f"Data dimensions in the first row of {name}:")
+            if not df.empty:
+                first_row = df.iloc[0]
+                for col in df.columns:
+                    val = first_row[col]
+                    if hasattr(val, 'shape'):
+                        print(f"  {col}: shape {val.shape}")
+                    elif hasattr(val, '__len__'):
+                        print(f"  {col}: length {len(val)}")
+                    else:
+                        print(f"  {col}: type {type(val)}")
+            print(f"\n{name} head:")
+            print(df.head())
+
+        print_df_debug_info(splits_to_save_df, "splits_to_save_df")
+        print_df_debug_info(splits_to_save_df_traslated, "splits_to_save_df_traslated")
+        
         print("------------------\n")
     
     print("END")
