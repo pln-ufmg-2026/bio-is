@@ -11,7 +11,7 @@ import os
 import pandas as pd
 from pathlib import Path
 from collections import Counter
-from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois, nosel
+from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois, nosel, cl_biois
 
 import socket
 
@@ -45,6 +45,7 @@ def get_selector(method: str):
     if method == 'e2sc-1':   return e2sc.E2SC(alphaMode="exact", betaMode='iterative')
     if method == 'e2sc-2':   return e2sc.E2SC(alphaMode="approximated", betaMode='heuristic')
     if method == 'bio-is':   return biois.BIOIS(beta=0.25, theta=0.50) # TODO change hyperparameters
+    if method == 'cl-bio-is': return cl_biois.CLBIOIS(beta=0.25, theta=0.50, p_easy=50, p_med=80)
 
     print(f"Unknown method: {method}")
 
@@ -64,8 +65,9 @@ def get_selection(X, y, fold, args):
     logger.info("Result: ", Counter(y[selector.sample_indices_]))
 
     entropy = getattr(selector, 'entropy_', None)
+    difficulty = getattr(selector, 'difficulty_', None)
 
-    return selector.sample_indices_, entropy
+    return selector.sample_indices_, entropy, difficulty
 
 
 def main(args_list=None, debug=False):
@@ -84,6 +86,7 @@ def main(args_list=None, debug=False):
 
     splits_to_save = {c: [] for c in splits_df.columns if c.endswith("idxs")}
     splits_to_save['entropy'] = []
+    splits_to_save['difficulty'] = []
        
     #for f in range(args.folds):
     for f in range(1):
@@ -99,7 +102,7 @@ def main(args_list=None, debug=False):
 
         ti = time.time()
 
-        idxs_docs, entropy = get_selection(X_train, y_train, f, args)
+        idxs_docs, entropy, difficulty = get_selection(X_train, y_train, f, args)
 
         s = len(y_train[idxs_docs])
         r = (t-s)/t
@@ -112,6 +115,7 @@ def main(args_list=None, debug=False):
 
         splits_to_save['train_idxs'].append(idxs_docs)
         splits_to_save['entropy'].append(entropy)
+        splits_to_save['difficulty'].append(difficulty)
 
     logger.info(f"time: {np.mean(info['time_for_reduce'])}")
     logger.info(f"time std: {np.std(info['time_for_reduce'])}")
