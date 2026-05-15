@@ -11,7 +11,7 @@ import os
 import pandas as pd
 from pathlib import Path
 from collections import Counter
-from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois
+from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois, nosel
 
 import socket
 
@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 def get_selector(method: str):
 
     #Baselines
+    if method == 'nosel':   return nosel.NoSel() # no instant selection, returns data as is
     if method == 'cnn':     return cnn.CNN()
     if method == 'enn':     return enn.ENN()
     if method == 'icf':     return icf.ICF()
