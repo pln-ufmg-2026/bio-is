@@ -7,7 +7,6 @@ from src.main.python.iSel.base import InstanceSelectionMixin
 import numpy as np
 import random
 from sklearn.utils.validation import check_X_y
-from sklearn.neighbors.classification import KNeighborsClassifier
 from sklearn.cluster import KMeans
 from sklearn.tree import DecisionTreeClassifier
 import copy
@@ -16,7 +15,6 @@ from numpy.random import uniform
 from sklearn.model_selection import StratifiedKFold
 from tqdm import tqdm
 
-from collections import Counter
 from sklearn.metrics import accuracy_score
 
 class CIS(InstanceSelectionMixin):

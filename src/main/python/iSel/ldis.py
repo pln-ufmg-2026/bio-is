@@ -7,10 +7,6 @@ from src.main.python.iSel.base import InstanceSelectionMixin
 import numpy as np
 import random
 from sklearn.utils.validation import check_X_y
-from sklearn.neighbors.classification import KNeighborsClassifier
-
-from src.main.python.iSel.enn import ENN
-from src.main.python.iSel.cnn import CNN
 
 from sklearn.metrics.pairwise import euclidean_distances
 

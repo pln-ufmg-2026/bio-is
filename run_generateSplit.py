@@ -9,20 +9,22 @@ import gc
 import io
 import os
 import pandas as pd
+from pathlib import Path
 from collections import Counter
-from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois
+from src.main.python.iSel import cnn, enn, icf, lssm, lsbo, drop3, ldis, cdis, xldis, psdsp, ib3, cis, egdis, e2sc, biois, nosel, cl_biois
 
 import socket
 
 import logging
 import logging.config
 
-logging.config.fileConfig('settings/logging.conf', defaults={'logfilename': f'resources/logs/{socket.gethostname()}.log'})
+logging.config.fileConfig(Path('settings') / 'logging.conf', defaults={'logfilename': str(Path('resources') / 'logs' / f'{socket.gethostname()}.log')})
 logger = logging.getLogger(__name__)
 
 def get_selector(method: str):
 
     #Baselines
+    if method == 'nosel':   return nosel.NoSel() # no instant selection, returns data as is
     if method == 'cnn':     return cnn.CNN()
     if method == 'enn':     return enn.ENN()
     if method == 'icf':     return icf.ICF()
@@ -43,6 +45,7 @@ def get_selector(method: str):
     if method == 'e2sc-1':   return e2sc.E2SC(alphaMode="exact", betaMode='iterative')
     if method == 'e2sc-2':   return e2sc.E2SC(alphaMode="approximated", betaMode='heuristic')
     if method == 'bio-is':   return biois.BIOIS(beta=0.25, theta=0.50) # TODO change hyperparameters
+    if method == 'cl-bio-is': return cl_biois.CLBIOIS(beta=0.25, theta=0.50, p_easy=50, p_med=80)
 
     print(f"Unknown method: {method}")
 
@@ -61,20 +64,29 @@ def get_selection(X, y, fold, args):
 
     logger.info("Result: ", Counter(y[selector.sample_indices_]))
 
-    return selector.sample_indices_
+    entropy = getattr(selector, 'entropy_', None)
+    difficulty = getattr(selector, 'difficulty_', None)
+
+    return selector.sample_indices_, entropy, difficulty
 
 
-def main():
+def main(args_list=None, debug=False):
 
     gc.collect()
 
-    args, info = arguments()
+    result = arguments(args_list)
+    if result == (None, None):
+        return
+    args, info = result
     logger.info(str(args))
 
-    print(f"{args.splitdir}/split_{args.folds}.pkl")
-    splits_df = get_splits(f"{args.splitdir}/split_{args.folds}.pkl")
+    split_file = str(Path(args.splitdir) / f"split_{args.folds}.pkl")
+    print(split_file)
+    splits_df = get_splits(split_file)
 
     splits_to_save = {c: [] for c in splits_df.columns if c.endswith("idxs")}
+    splits_to_save['entropy'] = []
+    splits_to_save['difficulty'] = []
        
     #for f in range(args.folds):
     for f in range(1):
@@ -90,7 +102,7 @@ def main():
 
         ti = time.time()
 
-        idxs_docs = get_selection(X_train, y_train, f, args)
+        idxs_docs, entropy, difficulty = get_selection(X_train, y_train, f, args)
 
         s = len(y_train[idxs_docs])
         r = (t-s)/t
@@ -102,6 +114,8 @@ def main():
         info['reducion'].append(r)
 
         splits_to_save['train_idxs'].append(idxs_docs)
+        splits_to_save['entropy'].append(entropy)
+        splits_to_save['difficulty'].append(difficulty)
 
     logger.info(f"time: {np.mean(info['time_for_reduce'])}")
     logger.info(f"time std: {np.std(info['time_for_reduce'])}")
@@ -110,7 +124,7 @@ def main():
 
     splits_to_save_df = pd.DataFrame(data=splits_to_save)
 
-    filename = f"{args.outputdir}/split_{args.folds}_{args.method}_idxinfold.pkl"
+    filename = str(Path(args.outputdir) / f"split_{args.folds}_{args.method}_idxinfold.pkl")
 
     checkpoint_splits(
         splits_df=splits_to_save_df,
@@ -127,9 +141,33 @@ def main():
 
     if args.save:
         save_results(args, info)
+
+    if debug:
+        print("\n--- DEBUG INFO ---")
+        
+        def print_df_debug_info(df, name):
+            print(f"\n{name} shape: {df.shape}")
+            print(f"Data dimensions in the first row of {name}:")
+            if not df.empty:
+                first_row = df.iloc[0]
+                for col in df.columns:
+                    val = first_row[col]
+                    if hasattr(val, 'shape'):
+                        print(f"  {col}: shape {val.shape}")
+                    elif hasattr(val, '__len__'):
+                        print(f"  {col}: length {len(val)}")
+                    else:
+                        print(f"  {col}: type {type(val)}")
+            print(f"\n{name} head:")
+            print(df.head())
+
+        print_df_debug_info(splits_to_save_df, "splits_to_save_df")
+        print_df_debug_info(splits_to_save_df_traslated, "splits_to_save_df_traslated")
+        
+        print("------------------\n")
     
     print("END")
-    exit()
+    return
 
 
 if __name__ == '__main__':

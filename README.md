@@ -84,6 +84,21 @@ or run the following bash example:
 bash bash/run_selection.sh
 ```
 
+## Benchmarking Multiple Splits (`run_all_splits.py`)
+
+A new script, `run_all_splits.py`, automates the process of evaluating multiple algorithms across various datasets.
+
+- **How it works:** It iterates through predefined lists of datasets and instance selection methods (e.g., `bio-is`, `cnn`), passing them sequentially to the core `run_generateSplit.py` engine.
+- **Output Management:** The script groups all execution outputs into a single timestamped directory (e.g., `output/YYYY-MM-DD_HH_MM/`). To make it easier to locate your most recent experiment, it automatically creates and maintains a duplicated `output/_latest/` folder upon a successful run.
+- **Usage:** Simply execute `python run_all_splits.py`. You can customize the benchmark by editing the `datasets` and `methods` lists directly at the top of the script.
+
+## Recent Pipeline Features
+
+- **Entropy Persistence:** Algorithms that calculate posterior probabilities and entropy (such as `bio-is`) now directly propagate their full entropy vector into the output split files. If available, you will find a new `entropy` column inside the exported pandas DataFrame (`split_...pkl`).
+- **No-Op Baseline (`nosel`):** You can now pass `-m nosel` as your method. This is a "no operation" selection that returns the original data unchanged, allowing you to generate baseline cross-validation splits using the exact same pipeline infrastructure.
+- **Notebook Debugging:** The `main()` function in `run_generateSplit.py` now accepts a `debug=True` parameter. When invoked interactively (e.g., inside Jupyter Notebooks), it will print out the shapes, array lengths, and head of the resulting selection DataFrames.
+- **Docker Optimizations:** The `Dockerfile` has been updated to leverage Docker BuildKit cache mounts (`--mount=type=cache,target=/root/.cache/pip`) to drastically reduce environment setup time and network timeout errors.
+
 ## Automatic Text Classification Datasets
 
 | **Dataset**  | **Size** | **Dim.** | **# Classes** | **Density** | **Skewness**         | **Link**                                       |

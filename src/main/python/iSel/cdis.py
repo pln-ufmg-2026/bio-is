@@ -5,14 +5,7 @@ LDIS
 
 from src.main.python.iSel.base import InstanceSelectionMixin
 import numpy as np
-import random
 from sklearn.utils.validation import check_X_y
-from sklearn.neighbors.classification import KNeighborsClassifier
-
-from src.main.python.iSel.enn import ENN
-from src.main.python.iSel.cnn import CNN
-
-from src.main.python.utils.general import load_splits_ids
 from sklearn.metrics.pairwise import euclidean_distances
 
 from collections import Counter
@@ -76,8 +69,8 @@ class CDIS(InstanceSelectionMixin):
         for i in range(X.shape[0]):
 
             if X[self.pkn[i]].shape[0] > 0:
-                centroid_pkn_x = np.mean(X[self.pkn[i]], axis=0)
-                self.dist_x_to_centroid_pkn[i] = euclidean_distances(X[i], centroid_pkn_x)[0]
+                centroid_pkn_x = np.asarray(np.mean(X[self.pkn[i]], axis=0))
+                self.dist_x_to_centroid_pkn[i] = euclidean_distances(X[i], centroid_pkn_x)[0][0]
             else:
                 centroid_pkn_x = X[i]
                 self.dist_x_to_centroid_pkn[i] = 0.0

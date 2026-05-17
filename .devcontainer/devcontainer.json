@@ -1,0 +1,17 @@
+{
+	"name": "bio-is",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "bio-is",
+	"workspaceFolder": "/e2sc-is",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-toolsai.jupyter"
+			],
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/bin/python3"
+			}
+		}
+	}
+}

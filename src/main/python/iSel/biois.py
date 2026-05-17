@@ -114,7 +114,10 @@ class BIOIS(InstanceSelectionMixin):
             X_train, y_train = X[train_index], y[train_index]
             X_val, y_val = X[val_index], y[val_index]
 
-            classifier = LogisticRegression(C=1.0,solver='warn',multi_class='warn',n_jobs=-1)
+            #nas versoes antigas era 
+            #classifier = LogisticRegression(C=1.0,solver='warn',multi_class='warn',n_jobs=-1)
+
+            classifier = LogisticRegression(solver='lbfgs', multi_class='auto', n_jobs=-1)
             print(classifier)
             classifier.fit(X_train, y_train)
 
@@ -158,8 +161,11 @@ class BIOIS(InstanceSelectionMixin):
         print("identifyNoiseByLowerNNEntropy")
         wrongpredictedIdx = y != self._pred
        
-        nnentropy = [stats.entropy(_) for _ in self._probaEveryone[wrongpredictedIdx]]
-        nnentropy = np.array(nnentropy)
+        # Calculate and store entropy for ALL instances by index
+        self.entropy_ = stats.entropy(self._probaEveryone, axis=1)
+
+        # Get entropy only for misclassified instances
+        nnentropy = self.entropy_[wrongpredictedIdx]
 
         nnentropy = (nnentropy-nnentropy.min())/(nnentropy.max()-nnentropy.min())
         nnentropy = 1. - nnentropy
