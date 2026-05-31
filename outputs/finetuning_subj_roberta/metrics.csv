@@ -1,0 +1,1 @@
+split,fold,epoch,train_loss,eval_loss,train_precision,train_accuracy,train_recall,train_f1,eval_precision,eval_accuracy,eval_recall,eval_f1,epoch_time_seconds,accumulated_time_seconds
