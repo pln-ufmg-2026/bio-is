@@ -181,6 +181,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-name", default="roberta-base")
     parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--folds", type=int, default=5)
+    parser.add_argument(
+        "--no-crossvalidation",
+        "--no-cv",
+        action="store_true",
+        help="Skip k-fold cross-validation and only train once on the 80%% train split.",
+    )
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--learning-rate", type=float, default=2e-5)
     parser.add_argument("--weight-decay", type=float, default=0.01)
@@ -875,29 +881,38 @@ def main() -> None:
     write_metrics_header(metrics_path)
     write_batch_metrics_header(batch_metrics_path)
 
-    cv = StratifiedKFold(n_splits=args.folds, shuffle=True, random_state=args.seed)
-    for fold, (train_position, val_position) in enumerate(
-        cv.split(train_pool_indices, train_pool_labels),
-        start=1,
-    ):
-        fold_train_indices = train_pool_indices[train_position].tolist()
-        fold_val_indices = train_pool_indices[val_position].tolist()
-        epoch_metrics, batch_metrics = run_training(
-            split_name="cv",
-            fold=fold,
-            texts=texts,
-            labels=labels,
-            difficulties=difficulties,
-            train_indices=fold_train_indices,
-            eval_indices=fold_val_indices,
-            tokenizer=tokenizer,
-            args=args,
-            num_labels=num_labels,
-            device=device,
-            output_dir=output_dir,
+    if not args.no_crossvalidation:
+        cv = StratifiedKFold(n_splits=args.folds, shuffle=True, random_state=args.seed)
+        for fold, (train_position, val_position) in enumerate(
+            cv.split(train_pool_indices, train_pool_labels),
+            start=1,
+        ):
+            fold_train_indices = train_pool_indices[train_position].tolist()
+            fold_val_indices = train_pool_indices[val_position].tolist()
+            epoch_metrics, batch_metrics = run_training(
+                split_name="cv",
+                fold=fold,
+                texts=texts,
+                labels=labels,
+                difficulties=difficulties,
+                train_indices=fold_train_indices,
+                eval_indices=fold_val_indices,
+                tokenizer=tokenizer,
+                args=args,
+                num_labels=num_labels,
+                device=device,
+                output_dir=output_dir,
+            )
+            all_metrics.extend(epoch_metrics)
+            all_batch_metrics.extend(batch_metrics)
+    else:
+        print("Cross-validation disabled; running only the 80/20 train/test split.")
+
+    if args.no_crossvalidation and args.skip_final_test:
+        raise ValueError(
+            "--no-crossvalidation and --skip-final-test cannot be used together; "
+            "that would leave no training run to execute."
         )
-        all_metrics.extend(epoch_metrics)
-        all_batch_metrics.extend(batch_metrics)
 
     if not args.skip_final_test:
         epoch_metrics, batch_metrics = run_training(
