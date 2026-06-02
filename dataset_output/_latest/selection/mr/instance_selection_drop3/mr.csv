@@ -1,0 +1,76 @@
+index,text,score,difficulty_score,difficulty_strategy,dificulty,fold
+290,"it's not only dull because we've seen [eddie] murphy do the genial-rogue shtick to death , but because the plot is equally hackneyed .",-1,0.006152304355055,roberta-mlm-loss,medium,0
+440,crikey indeed .,-1,0.0611618533730506,roberta-mlm-loss,hard,0
+4336,degenerates into hogwash .,-1,0.0006022658781148,roberta-mlm-loss,easy,0
+5351,"a thoughtful , provocative , insistently humanizing film .",1,0.0047759632579982,roberta-mlm-loss,medium,0
+5513,a very funny movie .,1,0.0004651647177524,roberta-mlm-loss,easy,0
+5560,this is one of polanski's best films .,1,0.7224682569503784,roberta-mlm-loss,hard,0
+5600,it's solid and affecting and exactly as thought-provoking as it should be .,1,0.0056763170287013,roberta-mlm-loss,medium,0
+5738,"dark and disturbing , but also surprisingly funny .",1,0.0044597713276743,roberta-mlm-loss,medium,0
+5767,[an] hilarious romantic comedy .,1,0.0022622249089181,roberta-mlm-loss,easy,0
+5794,an exhilarating experience .,1,0.0005602579331025,roberta-mlm-loss,easy,0
+5850,a pleasant romantic comedy .,1,0.0032499697990715,roberta-mlm-loss,easy,0
+5884,"for all its failed connections , divine secrets of the ya-ya sisterhood is nurturing , in a gauzy , dithering way .",1,0.2413082420825958,roberta-mlm-loss,hard,0
+5891,"divine secrets of the ya-ya sisterhood may not be exactly divine , but it's definitely -- defiantly -- ya ya , what with all of those terrific songs and spirited performances .",1,0.0254498813301324,roberta-mlm-loss,medium,0
+5929,a pleasant enough comedy that should have found a summer place .,1,0.0013161088572815,roberta-mlm-loss,easy,0
+5942,ice cube holds the film together with an engaging and warm performance . . .,1,0.622735857963562,roberta-mlm-loss,hard,0
+5946,it's a masterpiece .,1,0.0006908088689669,roberta-mlm-loss,easy,0
+6047,"hilarious , touching and wonderfully dyspeptic .",1,0.0008951273048296,roberta-mlm-loss,easy,0
+6127,"thoughtful , provocative and entertaining .",1,0.0018935248954221,roberta-mlm-loss,easy,0
+6135,often hilarious .,1,0.0185108762234449,roberta-mlm-loss,medium,0
+6171,everywhere the camera looks there is something worth seeing .,1,0.002849161857739,roberta-mlm-loss,easy,0
+6235,invincible is a wonderful movie .,1,0.0028744654264301,roberta-mlm-loss,easy,0
+6258,makes an aborbing if arguable case for the man's greatness .,1,0.0038326526992022,roberta-mlm-loss,easy,0
+6326,"an uplifting , near-masterpiece .",1,0.0012814661022275,roberta-mlm-loss,easy,0
+6446,a quiet treasure -- a film to be savored .,1,0.001196013065055,roberta-mlm-loss,easy,0
+6529,"a quiet , pure , elliptical film",1,0.002190624596551,roberta-mlm-loss,easy,0
+6648,it's made with deftly unsettling genre flair .,1,0.0026161884889006,roberta-mlm-loss,easy,0
+6706,'easily my choice for one of the year's best films . ',1,0.0015825123991817,roberta-mlm-loss,easy,0
+6769,one from the heart .,1,0.0061588403768837,roberta-mlm-loss,medium,0
+6786,very psychoanalytical -- provocatively so -- and also refreshingly literary .,1,0.0054499562829732,roberta-mlm-loss,medium,0
+6845,a good piece of work more often than not .,1,0.0006000442663207,roberta-mlm-loss,easy,0
+6940,"the film aims to be funny , uplifting and moving , sometimes all at once . the extent to which it succeeds is impressive .",1,0.005003263708204,roberta-mlm-loss,medium,0
+6972,". . . very funny , very enjoyable . . .",1,0.0195385627448558,roberta-mlm-loss,medium,0
+7003,the pianist is the film roman polanski may have been born to make .,1,0.0794407427310943,roberta-mlm-loss,hard,0
+7015,serious and thoughtful .,1,0.0033175928983837,roberta-mlm-loss,easy,0
+7067,one-of-a-kind near-masterpiece .,1,0.0243059415370225,roberta-mlm-loss,medium,0
+7143,the pianist is polanski's best film .,1,0.5348169803619385,roberta-mlm-loss,hard,0
+7157,"an inventive , absorbing movie that's as hard to classify as it is hard to resist .",1,0.0017216114792972,roberta-mlm-loss,easy,0
+7312,"by no means a great movie , but it is a refreshingly forthright one .",1,0.0007478923071175,roberta-mlm-loss,easy,0
+7324,an absorbing and unsettling psychological drama .,1,0.0005257552838884,roberta-mlm-loss,easy,0
+7404,"i liked about schmidt a lot , but i have a feeling that i would have liked it much more if harry & tonto never existed .",1,0.0497201196849346,roberta-mlm-loss,medium,0
+7583,"for those who are intrigued by politics of the '70s , the film is every bit as fascinating as it is flawed .",1,0.0008373230812139,roberta-mlm-loss,easy,0
+7866,a riveting story well told .,1,0.001092221471481,roberta-mlm-loss,easy,0
+7973,a tremendous piece of work .,1,0.0004419957695063,roberta-mlm-loss,easy,0
+8125,"this is dicaprio's best performance in anything ever , and easily the most watchable film of the year .",1,0.0006563146598637,roberta-mlm-loss,easy,0
+8137,discursive but oddly riveting documentary .,1,0.0010379643645137,roberta-mlm-loss,easy,0
+8222,a return to pure disney magic and is enjoyable family fare .,1,0.0057761794887483,roberta-mlm-loss,medium,0
+8282,. . . a thoughtful what-if for the heart as well as the mind .,1,0.0004168639425188,roberta-mlm-loss,easy,0
+8329,a flawed but engrossing thriller .,1,0.0005549891502596,roberta-mlm-loss,easy,0
+8378,a thought-provoking and often-funny drama about isolation .,1,0.0025532653089612,roberta-mlm-loss,easy,0
+8516,it's refreshing to see a romance this smart .,1,0.0062903156504035,roberta-mlm-loss,medium,0
+8669,this is one of the year's best films .,1,0.0023204137105494,roberta-mlm-loss,easy,0
+8781,"sweetly sexy , funny and touching .",1,0.0025987681001424,roberta-mlm-loss,easy,0
+8841,"if divine secrets of the ya-ya sisterhood suffers from a ploddingly melodramatic structure , it comes to life in the performances .",1,0.1720766723155975,roberta-mlm-loss,hard,0
+8894,"it's weird , wonderful , and not necessarily for kids .",1,0.0016451054252684,roberta-mlm-loss,easy,0
+8953,"a thoroughly enjoyable , heartfelt coming-of-age comedy .",1,0.0008894990314729,roberta-mlm-loss,easy,0
+9060,"sensual , funny and , in the end , very touching .",1,0.0004717982083093,roberta-mlm-loss,easy,0
+9081,the movie is ingenious fun . see it .,1,1.545699119567871,roberta-mlm-loss,hard,0
+9144,a weird and wonderful comedy .,1,0.0004299707652535,roberta-mlm-loss,easy,0
+9152,"a wonderful , ghastly film .",1,0.0013842872576788,roberta-mlm-loss,easy,0
+9327,the film is one of the year's best .,1,0.0018894203240051,roberta-mlm-loss,easy,0
+9353,a small movie with a big impact .,1,0.0013989735161885,roberta-mlm-loss,easy,0
+9365,nice piece of work .,1,0.0008188679930754,roberta-mlm-loss,easy,0
+9374,a film of quiet power .,1,0.0053480453789234,roberta-mlm-loss,medium,0
+9435,this is a film that manages to find greatness in the hue of its drastic iconography .,1,0.2546273469924927,roberta-mlm-loss,hard,0
+9484,a film that will enthrall the whole family .,1,0.0011630818480625,roberta-mlm-loss,easy,0
+9703,"full of detail about the man and his country , and is well worth seeing .",1,0.0022229384630918,roberta-mlm-loss,easy,0
+9752,it will break your heart many times over .,1,0.0013858604943379,roberta-mlm-loss,easy,0
+9773,really quite funny .,1,0.0013854381395503,roberta-mlm-loss,easy,0
+9978,"exhilarating , funny and fun .",1,0.002975745126605,roberta-mlm-loss,easy,0
+9997,"uplifting , funny and wise .",1,0.0010192759800702,roberta-mlm-loss,easy,0
+10002,a funny film .,1,0.0007547904388047,roberta-mlm-loss,easy,0
+10096,i liked a lot of the smaller scenes .,1,0.0021279947832226,roberta-mlm-loss,easy,0
+10099,"formuliac , but fun .",1,0.4380449652671814,roberta-mlm-loss,hard,0
+10184,as refreshing as a drink from a woodland stream .,1,0.0032011687289923,roberta-mlm-loss,easy,0
+10542,there is a general air of exuberance in all about the benjamins that's hard to resist .,1,0.0245108902454376,roberta-mlm-loss,medium,0

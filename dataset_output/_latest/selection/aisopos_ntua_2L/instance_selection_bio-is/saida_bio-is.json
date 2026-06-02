@@ -1,5 +1,5 @@
 {
-    "hiperparams": "Namespace(datain='/e2sc-is/resources/datasets', dataset='aisopos_ntua_2L', end_time='01-06-2026 22:48:30', filename='dataset_output/2026-06-01_22_48/selection/aisopos_ntua_2L/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/aisopos_ntua_2L/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-01_22_48', outputdir='dataset_output/2026-06-01_22_48/selection/aisopos_ntua_2L/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/aisopos_ntua_2L/splits', start_time='01-06-2026 22:48:29')",
+    "hiperparams": "Namespace(datain='/e2sc-is/resources/datasets', dataset='aisopos_ntua_2L', end_time='02-06-2026 09:40:50', filename='dataset_output/2026-06-02_09_40/selection/aisopos_ntua_2L/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/aisopos_ntua_2L/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-02_09_40', outputdir='dataset_output/2026-06-02_09_40/selection/aisopos_ntua_2L/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/aisopos_ntua_2L/splits', start_time='02-06-2026 09:40:48')",
     "dataset": "aisopos_ntua_2L",
     "method": "bio-is",
     "info": {
@@ -7,7 +7,7 @@
             0.448
         ],
         "time_for_reduce": [
-            1.5908570289611816
+            2.4298529624938965
         ],
         "original_len": [
             250
@@ -15,7 +15,7 @@
         "reduced_len": [
             138
         ],
-        "time_mean": 1.5908570289611816,
+        "time_mean": 2.4298529624938965,
         "reduction_mean": 0.448,
         "reduced_len_mean": 138.0,
         "original_len_mean": 250.0
