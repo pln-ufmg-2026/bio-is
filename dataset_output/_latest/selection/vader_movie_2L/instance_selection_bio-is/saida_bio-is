@@ -1,0 +1,13 @@
+bio-is
+Namespace(datain='/e2sc-is/resources/datasets', dataset='vader_movie_2L', filename='dataset_output/2026-06-01_22_48/selection/vader_movie_2L/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/vader_movie_2L/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-01_22_48', outputdir='dataset_output/2026-06-01_22_48/selection/vader_movie_2L/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/vader_movie_2L/splits', start_time='01-06-2026 22:49:35')
+times: [0.7242794036865234]
+
+				reducion: [0.3675078864353312]
+
+				time mean: 0.7242794036865234
+
+				reducion mean: 0.3675078864353312
+
+				reduced_len_mean: 6015.0
+
+				original_len_mean: 9510.0

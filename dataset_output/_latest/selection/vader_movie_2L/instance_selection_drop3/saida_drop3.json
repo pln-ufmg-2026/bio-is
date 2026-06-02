@@ -1,0 +1,24 @@
+{
+    "hiperparams": "Namespace(datain='/e2sc-is/resources/datasets', dataset='vader_movie_2L', end_time='01-06-2026 22:50:17', filename='dataset_output/2026-06-01_22_48/selection/vader_movie_2L/instance_selection_drop3/saida_drop3', folds=10, inputdir='/e2sc-is/resources/datasets/vader_movie_2L/tfidf', inputrep='tfidf', method='drop3', out='dataset_output/2026-06-01_22_48', outputdir='dataset_output/2026-06-01_22_48/selection/vader_movie_2L/instance_selection_drop3', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/vader_movie_2L/splits', start_time='01-06-2026 22:49:36')",
+    "dataset": "vader_movie_2L",
+    "method": "drop3",
+    "info": {
+        "reducion": [
+            0.7323869610935857
+        ],
+        "time_for_reduce": [
+            40.965049266815186
+        ],
+        "original_len": [
+            9510
+        ],
+        "reduced_len": [
+            2545
+        ],
+        "time_mean": 40.965049266815186,
+        "reduction_mean": 0.7323869610935857,
+        "reduced_len_mean": 2545.0,
+        "original_len_mean": 9510.0
+    },
+    "machine": "6495d6a3ba90"
+}

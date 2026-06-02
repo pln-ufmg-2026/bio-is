@@ -1,0 +1,13 @@
+bio-is
+Namespace(datain='/e2sc-is/resources/datasets', dataset='aisopos_ntua_2L', filename='dataset_output/2026-06-01_22_48/selection/aisopos_ntua_2L/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/aisopos_ntua_2L/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-01_22_48', outputdir='dataset_output/2026-06-01_22_48/selection/aisopos_ntua_2L/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/aisopos_ntua_2L/splits', start_time='01-06-2026 22:48:29')
+times: [1.5908570289611816]
+
+				reducion: [0.448]
+
+				time mean: 1.5908570289611816
+
+				reducion mean: 0.448
+
+				reduced_len_mean: 138.0
+
+				original_len_mean: 250.0

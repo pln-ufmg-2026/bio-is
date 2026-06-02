@@ -1,0 +1,24 @@
+{
+    "hiperparams": "Namespace(datain='/e2sc-is/resources/datasets', dataset='subj', end_time='01-06-2026 22:49:00', filename='dataset_output/2026-06-01_22_48/selection/subj/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/subj/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-01_22_48', outputdir='dataset_output/2026-06-01_22_48/selection/subj/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/subj/splits', start_time='01-06-2026 22:48:58')",
+    "dataset": "subj",
+    "method": "bio-is",
+    "info": {
+        "reducion": [
+            0.30744444444444446
+        ],
+        "time_for_reduce": [
+            2.1676037311553955
+        ],
+        "original_len": [
+            9000
+        ],
+        "reduced_len": [
+            6233
+        ],
+        "time_mean": 2.1676037311553955,
+        "reduction_mean": 0.30744444444444446,
+        "reduced_len_mean": 6233.0,
+        "original_len_mean": 9000.0
+    },
+    "machine": "6495d6a3ba90"
+}
