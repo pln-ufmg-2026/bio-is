@@ -3,6 +3,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 from tqdm import tqdm
+import pandas as pd
 
 from run_generateSplit import main as run_split_main
 
@@ -41,6 +42,8 @@ def main():
     # Calculate total iterations
     total_iterations = len(datasets) * len(methods)
     
+    csv_dict = {}
+    
     # Progress bar using tqdm
     with tqdm(total=total_iterations, desc="Benchmarking") as pbar:
         for dataset in datasets:
@@ -58,12 +61,33 @@ def main():
                 # Run the function directly
                 try:
                     run_split_main(args_list)
+                    csv_path = out / "selection" / dataset / f"instance_selection_{method}" / f"{dataset}.csv"
+                    if csv_path.exists():
+                        csv_dict[(method, dataset)] = csv_path
                 except Exception as e:
                     tqdm.write(f"\nError running {method} on {dataset}:")
                     tqdm.write(str(e))
                     
                 pbar.update(1)
                 
+    # Combine collected CSVs into a unified CSV at the root of the output folder
+    if csv_dict:
+        all_dfs = []
+        for (method, dataset), csv_path in csv_dict.items():
+            try:
+                df = pd.read_csv(csv_path)
+                df['dataset'] = dataset
+                df['algorithm'] = method
+                all_dfs.append(df)
+            except Exception as e:
+                tqdm.write(f"\nError reading CSV {csv_path}: {e}")
+        
+        if all_dfs:
+            unified_df = pd.concat(all_dfs, ignore_index=True)
+            unified_csv_path = out / "unified_output.csv"
+            unified_df.to_csv(unified_csv_path, index=False)
+            tqdm.write(f"\nSaved unified CSV with all data to: {unified_csv_path}")
+
     print(f"\nBenchmark completed! Results saved to: {out}")
     
     # Update _latest folder

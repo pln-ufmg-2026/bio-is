@@ -81,8 +81,17 @@ def load_original_dataset(datain_dir: str, dataset_name: str) -> pd.DataFrame:
     if texts_file.exists() and score_file.exists():
         texts = texts_file.read_text(encoding="utf-8").splitlines()
         scores = score_file.read_text(encoding="utf-8").splitlines()
+        
+        if len(texts) != len(scores):
+            logger.warning(f"Mismatched dataset lengths for {dataset_name}: texts.txt has {len(texts)} lines, score.txt has {len(scores)} lines. Aligning to score.txt length.")
+            print(f"Warning: Mismatched dataset lengths for {dataset_name}: texts.txt has {len(texts)} lines, score.txt has {len(scores)} lines. Aligning to score.txt length.")
+            if len(texts) > len(scores):
+                texts = texts[:len(scores)]
+            else:
+                texts = texts + [""] * (len(scores) - len(texts))
+                
         return pd.DataFrame({
-            "index": list(range(len(texts))),
+            "index": list(range(len(scores))),
             "text": texts,
             "score": scores
         })
