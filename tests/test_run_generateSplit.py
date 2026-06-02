@@ -42,5 +42,7 @@ def test_generate_split(method, tmp_path):
     # The split file name pattern from run_generateSplit.py:
     expected_split_file = expected_selection_dir / f"split_10_{method}.pkl"
     expected_split_file_idx = expected_selection_dir / f"split_10_{method}_idxinfold.pkl"
+    expected_csv_file = expected_selection_dir / f"{dataset_name}.csv"
     
     assert expected_split_file.exists() or expected_split_file_idx.exists(), f"Output split file for method {method} was not created"
+    assert expected_csv_file.exists(), f"Output CSV file for method {method} was not created"

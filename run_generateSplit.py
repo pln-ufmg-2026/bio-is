@@ -70,6 +70,57 @@ def get_selection(X, y, fold, args):
     return selector.sample_indices_, entropy, difficulty
 
 
+def load_original_dataset(datain_dir: str, dataset_name: str) -> pd.DataFrame:
+    dataset_path = Path(datain_dir) / dataset_name
+    csv_path = dataset_path / "dataset_with_dificulty.csv"
+    if csv_path.exists():
+        return pd.read_csv(csv_path)
+    
+    texts_file = dataset_path / "texts.txt"
+    score_file = dataset_path / "score.txt"
+    if texts_file.exists() and score_file.exists():
+        texts = texts_file.read_text(encoding="utf-8").splitlines()
+        scores = score_file.read_text(encoding="utf-8").splitlines()
+        return pd.DataFrame({
+            "index": list(range(len(texts))),
+            "text": texts,
+            "score": scores
+        })
+    raise FileNotFoundError(f"Original dataset files not found for dataset {dataset_name} at {dataset_path}")
+
+
+def save_reduced_csv(splits_to_save_df: pd.DataFrame, splits_to_save_df_translated: pd.DataFrame, args) -> None:
+    original_df = load_original_dataset(args.datain, args.dataset)
+    if original_df is None:
+        return
+        
+    all_folds_df = []
+    for f in range(len(splits_to_save_df_translated)):
+        new_train_idxs_in_fold = splits_to_save_df.loc[f].train_idxs
+        train_idxs_dataset_wide = splits_to_save_df_translated.loc[f].train_idxs
+        
+        if len(train_idxs_dataset_wide) == 0:
+            continue
+            
+        filtered_df = original_df.iloc[list(train_idxs_dataset_wide)].copy()
+        filtered_df['fold'] = f
+        
+        # Add entropy if applicable
+        entropy_array = splits_to_save_df.loc[f].entropy
+        if entropy_array is not None:
+            selected_entropy = [entropy_array[t] for t in new_train_idxs_in_fold]
+            filtered_df['entropy'] = selected_entropy
+            
+        all_folds_df.append(filtered_df)
+        
+    if all_folds_df:
+        final_df = pd.concat(all_folds_df, ignore_index=True)
+        csv_file = Path(args.outputdir) / f"{args.dataset}.csv"
+        final_df.to_csv(csv_file, index=False)
+        logger.info(f"Saved simple CSV output to {csv_file}")
+        print(f"Saved simple CSV output to {csv_file}")
+
+
 def main(args_list=None, debug=False):
 
     gc.collect()
@@ -138,6 +189,8 @@ def main(args_list=None, debug=False):
         splits_df=splits_to_save_df_traslated,
         filename=filename.replace("_idxinfold", "")
     )
+
+    save_reduced_csv(splits_to_save_df, splits_to_save_df_traslated, args)
 
     if args.save:
         save_results(args, info)
