@@ -36,7 +36,7 @@ def test_generate_split(method, tmp_path):
     main(args)
     
     # Check if the output directory and expected output file were created
-    expected_selection_dir = output_dir / "selection" / dataset_name
+    expected_selection_dir = output_dir / "selection" / dataset_name / f"instance_selection_{method}"
     assert expected_selection_dir.exists(), f"Output directory {expected_selection_dir} was not created"
     
     # The split file name pattern from run_generateSplit.py:

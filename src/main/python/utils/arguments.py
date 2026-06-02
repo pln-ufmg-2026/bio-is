@@ -39,7 +39,7 @@ def arguments(args_list=None):
 
     args.inputdir = str(Path(args.datain) / args.dataset / args.inputrep)
     args.splitdir = str(Path(args.datain) / args.dataset / "splits")
-    args.outputdir = str(Path(args.out) / "selection" / args.dataset)
+    args.outputdir = str(Path(args.out) / "selection" / args.dataset / f"instance_selection_{args.method}")
 
     args.filename = str(Path(args.outputdir) / f"saida_{args.method}")
 

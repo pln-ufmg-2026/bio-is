@@ -19,6 +19,7 @@ def main():
     
     methods = [
         "bio-is",
+        "drop3"
         # Add more methods like "cnn", "enn", "icf", "lssm", "lsbo", "drop3", etc.
     ]
     
@@ -28,7 +29,7 @@ def main():
     
     # Create timestamped output directory
     timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M")
-    out = Path("output") / timestamp
+    out = Path("dataset_output") / timestamp
     out.mkdir(parents=True, exist_ok=True)
     
     print(f"Data directory: {datain}")
@@ -66,7 +67,7 @@ def main():
     print(f"\nBenchmark completed! Results saved to: {out}")
     
     # Update _latest folder
-    latest_dir = Path("output") / "_latest"
+    latest_dir = Path("dataset_output") / "_latest"
     if latest_dir.exists():
         shutil.rmtree(latest_dir)
     try:
