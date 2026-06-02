@@ -5,3 +5,5 @@ resources/outsel
 .venv
 .idea
 output/
+dataset_output/*
+!dataset_output/_latest/
