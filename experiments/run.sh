@@ -14,6 +14,13 @@ PYTHON_BIN="${PYTHON_BIN:-python3}"
 FINETUNING_SCRIPT="${SCRIPT_DIR}/finetuning.py"
 USER_ARGS=("$@")
 
+if [[ ! -f "${PROJECT_ROOT}/.venv/bin/activate" ]]; then
+    echo "Virtual environment not found: ${PROJECT_ROOT}/.venv" >&2
+    exit 1
+fi
+
+source "${PROJECT_ROOT}/.venv/bin/activate"
+
 prepare_dataset_dir() {
     local csv_path="$1"
     local group_name="$2"
