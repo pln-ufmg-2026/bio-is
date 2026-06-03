@@ -1,0 +1,1 @@
+split,fold,epoch,batch,batch_size,batch_time_seconds,epoch_accumulated_time_seconds,total_accumulated_time_seconds,loss,precision,accuracy,recall,f1,learning_rate
