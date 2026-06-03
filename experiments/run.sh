@@ -12,6 +12,7 @@ PREPARED_ROOT="${PROJECT_ROOT}/.tmp/finetuning_datasets"
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 FINETUNING_SCRIPT="${SCRIPT_DIR}/finetuning.py"
+FINETUNING_ARGS=(--batch-size 32 --no-cv --epochs 10)
 USER_ARGS=("$@")
 
 if [[ ! -f "${PROJECT_ROOT}/.venv/bin/activate" ]]; then
@@ -68,7 +69,7 @@ run_dataset_group() {
             --dataset-name "${dataset_name}" \
             --dataset-dir "${prepared_dir}" \
             --output-dir "${output_dir}" \
-            --no-crossvalidation \
+            "${FINETUNING_ARGS[@]}" \
             "${extra_args[@]}"
     done
     shopt -u nullglob
