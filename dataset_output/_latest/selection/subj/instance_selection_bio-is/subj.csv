@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty,fold,entropy
+index,text,score,difficulty_score,difficulty_strategy,difficulty,fold,entropy
 1,"color , musical bounce and warm seas lapping on island shores . and just enough science to send you home thinking .",0,0.1491685062646865,roberta-mlm-loss,hard,0,0.6926308804866066
 3,a light-hearted french film about the spiritual quest of a fashion model seeking peace of mind while in a love affair with a veterinarian who is a non-practicing jew .,0,0.3349910676479339,roberta-mlm-loss,hard,0,0.687843068343365
 4,"my wife is an actress has its moments in looking at the comic effects of jealousy . in the end , though , it is only mildly amusing when it could have been so much more .",0,0.0071724960580468,roberta-mlm-loss,medium,0,0.5696038269550541

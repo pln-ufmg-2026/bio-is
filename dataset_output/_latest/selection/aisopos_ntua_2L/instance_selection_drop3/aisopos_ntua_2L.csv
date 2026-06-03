@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty,fold
+index,text,score,difficulty_score,difficulty_strategy,difficulty,fold
 0,I want togo home :(,-1,0.2603725492954254,roberta-mlm-loss,hard,0
 1,i can feel that my dark eye rings are getting darker and darker now. i mean processing right now! argh :(,-1,0.4860814809799194,roberta-mlm-loss,hard,0
 3,sitting next cute little toddlers on the subway always puts me in a good mood...but now I miss my niece and nephews :(,-1,0.1251522451639175,roberta-mlm-loss,medium,0

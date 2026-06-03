@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty,fold,entropy
+index,text,score,difficulty_score,difficulty_strategy,difficulty,fold,entropy
 0,"The Rock is destined to be the 21st Century's new ''Conan'' and that he's going to make a splash even greater than Arnold Schwarzenegger, Jean Claud Van Damme or Steven Segal.",1,0.4012162387371063,roberta-mlm-loss,hard,0,0.6881324618703459
 1,The gorgeously elaborate continuation of ''The Lord of the Rings'' trilogy is so huge that a column of words cannot adequately describe co writer/director Peter Jackson's expanded vision of J.R.R. Tolkien's Middle earth.,1,0.2394487112760543,roberta-mlm-loss,hard,0,0.6864133480169166
 3,"If you sometimes like to go to the movies to have fun, Wasabi is a good place to start.",1,0.0020420255605131,roberta-mlm-loss,medium,0,0.6122471709425419

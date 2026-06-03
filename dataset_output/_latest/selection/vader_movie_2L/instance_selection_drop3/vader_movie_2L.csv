@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty,fold
+index,text,score,difficulty_score,difficulty_strategy,difficulty,fold
 2,Effective but too tepid biopic,-1,0.0004486735560931,roberta-mlm-loss,easy,0
 4,"Emerges as something rare, an issue movie that's so honest and keenly observed that it doesn't feel like one.",1,0.3356748521327972,roberta-mlm-loss,hard,0
 16,Illuminating if overly talky documentary.,1,0.0022701427806168,roberta-mlm-loss,medium,0

@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty,fold
+index,text,score,difficulty_score,difficulty_strategy,difficulty,fold
 2,it is not a mass-market entertainment but an uncompromising attempt by one artist to think about another .,0,0.0303150191903114,roberta-mlm-loss,medium,0
 4,"my wife is an actress has its moments in looking at the comic effects of jealousy . in the end , though , it is only mildly amusing when it could have been so much more .",0,0.0071724960580468,roberta-mlm-loss,medium,0
 10,"the bland outweighs the nifty , and cletis tout never becomes the clever crime comedy it thinks it is .",0,0.07033471763134,roberta-mlm-loss,medium,0

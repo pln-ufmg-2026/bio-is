@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty,fold,entropy
+index,text,score,difficulty_score,difficulty_strategy,difficulty,fold,entropy
 1,"it's so laddish and juvenile , only teenage boys could possibly find it funny .",-1,0.0018709221621975,roberta-mlm-loss,easy,0,0.6926494175162601
 4,a visually flashy but narratively opaque and emotionally vapid exercise in style and mystification .,-1,0.0017351135611534,roberta-mlm-loss,easy,0,0.6664820251040042
 5,"the story is also as unoriginal as they come , already having been recycled more times than i'd care to count .",-1,0.0012075813720002,roberta-mlm-loss,easy,0,0.691755909826772

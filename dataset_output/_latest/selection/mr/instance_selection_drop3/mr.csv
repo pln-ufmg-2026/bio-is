@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty,fold
+index,text,score,difficulty_score,difficulty_strategy,difficulty,fold
 290,"it's not only dull because we've seen [eddie] murphy do the genial-rogue shtick to death , but because the plot is equally hackneyed .",-1,0.006152304355055,roberta-mlm-loss,medium,0
 440,crikey indeed .,-1,0.0611618533730506,roberta-mlm-loss,hard,0
 4336,degenerates into hogwash .,-1,0.0006022658781148,roberta-mlm-loss,easy,0
