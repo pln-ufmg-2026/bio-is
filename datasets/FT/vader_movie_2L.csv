@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty
+index,text,score,difficulty_score,difficulty_strategy,difficulty
 0,"The Rock is destined to be the 21st Century's new ''Conan'' and that he's going to make a splash even greater than Arnold Schwarzenegger, Jean Claud Van Damme or Steven Segal.",1,0.4012162387371063,roberta-mlm-loss,hard
 1,The gorgeously elaborate continuation of ''The Lord of the Rings'' trilogy is so huge that a column of words cannot adequately describe co writer/director Peter Jackson's expanded vision of J.R.R. Tolkien's Middle earth.,1,0.23944871127605438,roberta-mlm-loss,hard
 2,Effective but too tepid biopic,-1,0.00044867355609312654,roberta-mlm-loss,easy

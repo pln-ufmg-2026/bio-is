@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty
+index,text,score,difficulty_score,difficulty_strategy,difficulty
 0,"simplistic , silly and tedious .",-1,0.0021712123416364193,roberta-mlm-loss,easy
 1,"it's so laddish and juvenile , only teenage boys could possibly find it funny .",-1,0.0018709221621975303,roberta-mlm-loss,easy
 2,exploitative and largely devoid of the depth or sophistication that would make watching such a graphic treatment of the crimes bearable .,-1,0.007709380239248276,roberta-mlm-loss,medium
