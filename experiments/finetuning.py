@@ -167,6 +167,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--datasets-root", type=Path, default=DEFAULT_DATASETS_ROOT)
     parser.add_argument(
+        "--dataset-path",
+        type=Path,
+        default=None,
+        help="Direct path to a CSV/TSV dataset with text, score, and optional difficulty columns.",
+    )
+    parser.add_argument(
         "--dataset-dir",
         type=Path,
         default=None,
@@ -212,9 +218,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--difficulty-column",
-        default="dificulty",
-        help="Difficulty column/file stem used for curriculum learning. Also accepts difficulty as fallback.",
+        default="difficulty",
+        help="Difficulty column/file stem used for curriculum learning. Also accepts dificulty as fallback.",
     )
+    parser.add_argument("--text-column", default="text", help="Text feature column for CSV/TSV datasets.")
+    parser.add_argument("--target-column", default="score", help="Target label column for CSV/TSV datasets.")
     parser.add_argument(
         "--skip-final-test",
         action="store_true",
@@ -247,7 +255,9 @@ def list_available_datasets(datasets_root: Path) -> List[str]:
     )
 
 
-def resolve_dataset_dir(args: argparse.Namespace) -> Path:
+def resolve_dataset_path(args: argparse.Namespace) -> Path:
+    if args.dataset_path is not None:
+        return args.dataset_path
     if args.dataset_dir is not None:
         return args.dataset_dir
     return args.datasets_root / args.dataset_name
@@ -256,6 +266,8 @@ def resolve_dataset_dir(args: argparse.Namespace) -> Path:
 def resolve_output_dir(args: argparse.Namespace) -> Path:
     if args.output_dir is not None:
         return args.output_dir
+    if args.dataset_path is not None:
+        return DEFAULT_OUTPUT_ROOT / f"finetuning_{args.dataset_path.stem}_roberta"
     return DEFAULT_OUTPUT_ROOT / f"finetuning_{args.dataset_name}_roberta"
 
 
@@ -303,33 +315,38 @@ def format_difficulty_rank(rank: float) -> str:
 
 def read_tabular_dataset(
     dataset_path: Path,
+    text_column: str,
+    target_column: str,
     difficulty_column: str,
-) -> Tuple[List[str], List[int], Optional[List[DifficultyValue]], Dict[int, int]]:
+) -> Tuple[List[str], List[int], Optional[List[DifficultyValue]], Dict[str, int]]:
     delimiter = "\t" if dataset_path.suffix == ".tsv" else ","
     with dataset_path.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle, delimiter=delimiter)
         if reader.fieldnames is None:
             raise ValueError(f"No header found in {dataset_path}.")
 
-        text_column = "text" if "text" in reader.fieldnames else "texts"
-        label_column = "score" if "score" in reader.fieldnames else "label"
+        if text_column not in reader.fieldnames:
+            raise ValueError(
+                f"{dataset_path} must contain text column {text_column!r}. "
+                f"Found: {reader.fieldnames}"
+            )
+        if target_column not in reader.fieldnames:
+            raise ValueError(
+                f"{dataset_path} must contain target column {target_column!r}. "
+                f"Found: {reader.fieldnames}"
+            )
         difficulty_names = [difficulty_column, "dificulty", "difficulty"]
         selected_difficulty_column = next(
             (name for name in difficulty_names if name in reader.fieldnames),
             None,
         )
-        if text_column not in reader.fieldnames or label_column not in reader.fieldnames:
-            raise ValueError(
-                f"{dataset_path} must contain text/texts and score/label columns. "
-                f"Found: {reader.fieldnames}"
-            )
 
         texts: List[str] = []
-        raw_labels: List[int] = []
+        raw_labels: List[str] = []
         raw_difficulties: Optional[List[DifficultyValue]] = [] if selected_difficulty_column else None
         for row in reader:
             texts.append(row[text_column])
-            raw_labels.append(int(row[label_column]))
+            raw_labels.append(row[target_column])
             if raw_difficulties is not None and selected_difficulty_column is not None:
                 raw_difficulties.append(parse_difficulty(row[selected_difficulty_column]))
 
@@ -339,19 +356,30 @@ def read_tabular_dataset(
 
 
 def load_text_classification_dataset(
-    dataset_dir: Path,
+    dataset_path: Path,
+    text_column: str,
+    target_column: str,
     difficulty_column: str,
-) -> Tuple[List[str], List[int], Optional[List[DifficultyValue]], Dict[int, int]]:
+) -> Tuple[List[str], List[int], Optional[List[DifficultyValue]], Dict[str, int]]:
+    if dataset_path.is_file():
+        return read_tabular_dataset(dataset_path, text_column, target_column, difficulty_column)
+
+    dataset_dir = dataset_path
     tabular_dataset_path = find_tabular_dataset_path(dataset_dir)
     if tabular_dataset_path is not None:
-        return read_tabular_dataset(tabular_dataset_path, difficulty_column)
+        return read_tabular_dataset(
+            tabular_dataset_path,
+            text_column,
+            target_column,
+            difficulty_column,
+        )
 
     texts_path = dataset_dir / "texts.txt"
     labels_path = dataset_dir / "score.txt"
     difficulty_path = find_difficulty_path(dataset_dir, difficulty_column)
 
     texts = texts_path.read_text(encoding="utf-8").splitlines()
-    raw_labels = [int(line.strip()) for line in labels_path.read_text(encoding="utf-8").splitlines()]
+    raw_labels = [line.strip() for line in labels_path.read_text(encoding="utf-8").splitlines()]
     difficulties = (
         [parse_difficulty(line) for line in difficulty_path.read_text(encoding="utf-8").splitlines()]
         if difficulty_path is not None
@@ -843,10 +871,12 @@ def main() -> None:
 
     set_seed(args.seed)
 
-    dataset_dir = resolve_dataset_dir(args)
+    dataset_path = resolve_dataset_path(args)
     output_dir = resolve_output_dir(args)
     texts, labels, difficulties, label_to_id = load_text_classification_dataset(
-        dataset_dir,
+        dataset_path,
+        args.text_column,
+        args.target_column,
         args.difficulty_column,
     )
     if args.curriculum_learning and difficulties is None:
@@ -858,7 +888,7 @@ def main() -> None:
     num_labels = len(unique_labels)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Loaded {len(texts)} examples from {dataset_dir}")
+    print(f"Loaded {len(texts)} examples from {dataset_path}")
     print(f"Label mapping: {label_to_id}")
     print(f"Curriculum learning: {args.curriculum_learning}")
     print(f"Using {device} with model {args.model_name}")
