@@ -1,24 +1,24 @@
 {
-    "hiperparams": "Namespace(datain='/e2sc-is/resources/datasets', dataset='vader_movie_2L', end_time='02-06-2026 09:41:51', filename='dataset_output/2026-06-02_09_40/selection/vader_movie_2L/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/vader_movie_2L/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-02_09_40', outputdir='dataset_output/2026-06-02_09_40/selection/vader_movie_2L/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/vader_movie_2L/splits', start_time='02-06-2026 09:41:50')",
+    "hiperparams": "Namespace(dataset='vader_movie_2L', method='bio-is', folds=10, save=True, inputrep='tfidf', out='dataset_output/2026-06-04_09_37', datain='/home/matheusc/Repos/bio-is/resources/datasets', overwrite=0, inputdir='/home/matheusc/Repos/bio-is/resources/datasets/vader_movie_2L/tfidf', splitdir='/home/matheusc/Repos/bio-is/resources/datasets/vader_movie_2L/splits', outputdir='dataset_output/2026-06-04_09_37/selection/vader_movie_2L/instance_selection_bio-is', filename='dataset_output/2026-06-04_09_37/selection/vader_movie_2L/instance_selection_bio-is/saida_bio-is', start_time='04-06-2026 09:37:18', end_time='04-06-2026 09:37:19')",
     "dataset": "vader_movie_2L",
     "method": "bio-is",
     "info": {
         "reducion": [
-            0.3675078864353312
+            0.17045215562565721
         ],
         "time_for_reduce": [
-            0.6147592067718506
+            0.2998793125152588
         ],
         "original_len": [
             9510
         ],
         "reduced_len": [
-            6015
+            7889
         ],
-        "time_mean": 0.6147592067718506,
-        "reduction_mean": 0.3675078864353312,
-        "reduced_len_mean": 6015.0,
+        "time_mean": 0.2998793125152588,
+        "reduction_mean": 0.17045215562565721,
+        "reduced_len_mean": 7889.0,
         "original_len_mean": 9510.0
     },
-    "machine": "6495d6a3ba90"
+    "machine": "ndido"
 }

@@ -1,13 +1,13 @@
 bio-is
-Namespace(datain='/e2sc-is/resources/datasets', dataset='vader_movie_2L', filename='dataset_output/2026-06-02_09_40/selection/vader_movie_2L/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/vader_movie_2L/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-02_09_40', outputdir='dataset_output/2026-06-02_09_40/selection/vader_movie_2L/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/vader_movie_2L/splits', start_time='02-06-2026 09:41:50')
-times: [0.6147592067718506]
+Namespace(dataset='vader_movie_2L', method='bio-is', folds=10, save=True, inputrep='tfidf', out='dataset_output/2026-06-04_09_37', datain='/home/matheusc/Repos/bio-is/resources/datasets', overwrite=0, inputdir='/home/matheusc/Repos/bio-is/resources/datasets/vader_movie_2L/tfidf', splitdir='/home/matheusc/Repos/bio-is/resources/datasets/vader_movie_2L/splits', outputdir='dataset_output/2026-06-04_09_37/selection/vader_movie_2L/instance_selection_bio-is', filename='dataset_output/2026-06-04_09_37/selection/vader_movie_2L/instance_selection_bio-is/saida_bio-is', start_time='04-06-2026 09:37:18')
+times: [0.2998793125152588]
 
-				reducion: [0.3675078864353312]
+				reducion: [0.17045215562565721]
 
-				time mean: 0.6147592067718506
+				time mean: 0.2998793125152588
 
-				reducion mean: 0.3675078864353312
+				reducion mean: 0.17045215562565721
 
-				reduced_len_mean: 6015.0
+				reduced_len_mean: 7889.0
 
 				original_len_mean: 9510.0

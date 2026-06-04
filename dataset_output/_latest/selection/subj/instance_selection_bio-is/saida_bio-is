@@ -1,13 +1,13 @@
 bio-is
-Namespace(datain='/e2sc-is/resources/datasets', dataset='subj', filename='dataset_output/2026-06-02_09_40/selection/subj/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/subj/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-02_09_40', outputdir='dataset_output/2026-06-02_09_40/selection/subj/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/subj/splits', start_time='02-06-2026 09:41:17')
-times: [1.270097017288208]
+Namespace(dataset='subj', method='bio-is', folds=10, save=True, inputrep='tfidf', out='dataset_output/2026-06-04_09_37', datain='/home/matheusc/Repos/bio-is/resources/datasets', overwrite=0, inputdir='/home/matheusc/Repos/bio-is/resources/datasets/subj/tfidf', splitdir='/home/matheusc/Repos/bio-is/resources/datasets/subj/splits', outputdir='dataset_output/2026-06-04_09_37/selection/subj/instance_selection_bio-is', filename='dataset_output/2026-06-04_09_37/selection/subj/instance_selection_bio-is/saida_bio-is', start_time='04-06-2026 09:37:17')
+times: [0.31380486488342285]
 
-				reducion: [0.30744444444444446]
+				reducion: [0.13433333333333333]
 
-				time mean: 1.270097017288208
+				time mean: 0.31380486488342285
 
-				reducion mean: 0.30744444444444446
+				reducion mean: 0.13433333333333333
 
-				reduced_len_mean: 6233.0
+				reduced_len_mean: 7791.0
 
 				original_len_mean: 9000.0

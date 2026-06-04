@@ -1,4 +1,4 @@
-index,text,score,difficulty_score,difficulty_strategy,dificulty
+index,text,score,difficulty_score,difficulty_strategy,difficulty
 0,"smart and alert , thirteen conversations about one thing is a small gem .",0,0.14153866469860077,roberta-mlm-loss,hard
 1,"color , musical bounce and warm seas lapping on island shores . and just enough science to send you home thinking .",0,0.14916850626468658,roberta-mlm-loss,hard
 2,it is not a mass-market entertainment but an uncompromising attempt by one artist to think about another .,0,0.030315019190311432,roberta-mlm-loss,medium

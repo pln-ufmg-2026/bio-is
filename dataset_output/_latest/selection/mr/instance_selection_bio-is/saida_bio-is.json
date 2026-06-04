@@ -1,24 +1,24 @@
 {
-    "hiperparams": "Namespace(datain='/e2sc-is/resources/datasets', dataset='mr', end_time='02-06-2026 09:40:53', filename='dataset_output/2026-06-02_09_40/selection/mr/instance_selection_bio-is/saida_bio-is', folds=10, inputdir='/e2sc-is/resources/datasets/mr/tfidf', inputrep='tfidf', method='bio-is', out='dataset_output/2026-06-02_09_40', outputdir='dataset_output/2026-06-02_09_40/selection/mr/instance_selection_bio-is', overwrite=0, save=True, splitdir='/e2sc-is/resources/datasets/mr/splits', start_time='02-06-2026 09:40:51')",
+    "hiperparams": "Namespace(dataset='mr', method='bio-is', folds=10, save=True, inputrep='tfidf', out='dataset_output/2026-06-04_09_37', datain='/home/matheusc/Repos/bio-is/resources/datasets', overwrite=0, inputdir='/home/matheusc/Repos/bio-is/resources/datasets/mr/tfidf', splitdir='/home/matheusc/Repos/bio-is/resources/datasets/mr/splits', outputdir='dataset_output/2026-06-04_09_37/selection/mr/instance_selection_bio-is', filename='dataset_output/2026-06-04_09_37/selection/mr/instance_selection_bio-is/saida_bio-is', start_time='04-06-2026 09:37:17', end_time='04-06-2026 09:37:17')",
     "dataset": "mr",
     "method": "bio-is",
     "info": {
         "reducion": [
-            0.3726941115164148
+            0.17352787910369985
         ],
         "time_for_reduce": [
-            1.6337261199951172
+            0.1885523796081543
         ],
         "original_len": [
             9595
         ],
         "reduced_len": [
-            6019
+            7930
         ],
-        "time_mean": 1.6337261199951172,
-        "reduction_mean": 0.3726941115164148,
-        "reduced_len_mean": 6019.0,
+        "time_mean": 0.1885523796081543,
+        "reduction_mean": 0.17352787910369985,
+        "reduced_len_mean": 7930.0,
         "original_len_mean": 9595.0
     },
-    "machine": "6495d6a3ba90"
+    "machine": "ndido"
 }
