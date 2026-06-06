@@ -11,9 +11,18 @@ IS_ROOT="${DATASETS_ROOT}/IS"
 OUTPUT_ROOT="${PROJECT_ROOT}/output"
 RUN_OUTPUT_ROOT="${PROJECT_ROOT}/.tmp/finetuning_outputs"
 
+if [[ -z "${SEED:-}" ]]; then
+    read -rp "Enter seed (integer): " SEED
+    if [[ ! "${SEED}" =~ ^-?[0-9]+$ ]]; then
+        echo "Error: seed must be an integer" >&2
+        exit 1
+    fi
+fi
+
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 FINETUNING_SCRIPT="${SCRIPT_DIR}/finetuning.py"
 FINETUNING_ARGS=(
+    --seed "${SEED}"
     --batch-size 32
     --no-cv
     --epochs 10
