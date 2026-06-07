@@ -379,6 +379,86 @@ def plot_iteration_learning_curves(df_epochs, iter_name, output_dir):
     plt.savefig(os.path.join(output_dir, 'learning_curves_loss.png'), dpi=300, bbox_inches='tight')
     plt.close()
 
+    # 3. Bar plot version for Eval F1 Convergence
+    fig, axes = plt.subplots(2, 2, figsize=(16, 12), sharex=False)
+    axes = axes.flatten()
+    for idx, dataset in enumerate(datasets):
+        ax = axes[idx]
+        df_ds = df_iter[df_iter['dataset'] == dataset]
+        sns.barplot(
+            data=df_ds,
+            x='epoch',
+            y='eval_f1',
+            hue='config',
+            hue_order=configs,
+            palette=CONFIG_COLORS,
+            ax=ax,
+            edgecolor='black',
+            linewidth=0.5
+        )
+        ax.set_title(dataset)
+        ax.set_xlabel('Epoch')
+        ax.set_ylabel('Eval F1')
+        ax.set_ylim(0, 1.15)
+        ax.legend().remove()
+        
+        # Annotate values
+        for p in ax.patches:
+            height = p.get_height()
+            if height > 0:
+                ax.annotate(f'{height:.2f}',
+                            (p.get_x() + p.get_width() / 2., height),
+                            ha='center', va='bottom',
+                            fontsize=7, xytext=(0, 2),
+                            textcoords='offset points',
+                            rotation=90)
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc='lower center', ncol=len(configs), bbox_to_anchor=(0.5, -0.02))
+    fig.suptitle(f'Eval F1 Convergence (Bar Chart) - {iter_name}', y=0.98)
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+    plt.savefig(os.path.join(output_dir, 'learning_curves_f1_bar.png'), dpi=300, bbox_inches='tight')
+    plt.close()
+
+    # 4. Bar plot version for Eval Loss Convergence
+    fig, axes = plt.subplots(2, 2, figsize=(16, 12), sharex=False)
+    axes = axes.flatten()
+    for idx, dataset in enumerate(datasets):
+        ax = axes[idx]
+        df_ds = df_iter[df_iter['dataset'] == dataset]
+        sns.barplot(
+            data=df_ds,
+            x='epoch',
+            y='eval_loss',
+            hue='config',
+            hue_order=configs,
+            palette=CONFIG_COLORS,
+            ax=ax,
+            edgecolor='black',
+            linewidth=0.5
+        )
+        ax.set_title(dataset)
+        ax.set_xlabel('Epoch')
+        ax.set_ylabel('Eval Loss')
+        ax.set_ylim(0, df_ds['eval_loss'].max() * 1.15 if not df_ds.empty and df_ds['eval_loss'].max() > 0 else 1.15)
+        ax.legend().remove()
+        
+        # Annotate values
+        for p in ax.patches:
+            height = p.get_height()
+            if height > 0:
+                ax.annotate(f'{height:.2f}',
+                            (p.get_x() + p.get_width() / 2., height),
+                            ha='center', va='bottom',
+                            fontsize=7, xytext=(0, 2),
+                            textcoords='offset points',
+                            rotation=90)
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc='lower center', ncol=len(configs), bbox_to_anchor=(0.5, -0.02))
+    fig.suptitle(f'Eval Loss Convergence (Bar Chart) - {iter_name}', y=0.98)
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+    plt.savefig(os.path.join(output_dir, 'learning_curves_loss_bar.png'), dpi=300, bbox_inches='tight')
+    plt.close()
+
 def plot_overall_comparisons(df_summary, output_dir):
     """
     Generates comparison plots across iterations (iter0, iter1, iter2) for each configuration.
@@ -463,6 +543,99 @@ def plot_overall_comparisons(df_summary, output_dir):
     plt.legend(title='Configuration', loc='upper right')
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, 'overall_time_progression.png'), dpi=300)
+    plt.close()
+
+    # 4. Progression of F1 (Bar Plot)
+    plt.figure(figsize=(10, 6))
+    ax = sns.barplot(
+        data=df_avg,
+        x='iteration',
+        y='best_f1',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        edgecolor='black',
+        linewidth=0.8
+    )
+    plt.title('Average F1 Score Progression (Bar Chart)', pad=20)
+    plt.xlabel('Experiment Iteration', labelpad=10)
+    plt.ylabel('Average Eval F1 (All Datasets)', labelpad=10)
+    plt.ylim(0, 1.15)
+    plt.legend(title='Configuration', bbox_to_anchor=(1.02, 1), loc='upper left')
+    
+    # Annotate values on top of bars
+    for p in ax.patches:
+        height = p.get_height()
+        if height > 0:
+            ax.annotate(f'{height:.3f}',
+                        (p.get_x() + p.get_width() / 2., height),
+                        ha='center', va='bottom',
+                        fontsize=8, xytext=(0, 3),
+                        textcoords='offset points')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'overall_f1_progression_bar.png'), dpi=300)
+    plt.close()
+
+    # 5. Progression of Accuracy (Bar Plot)
+    plt.figure(figsize=(10, 6))
+    ax = sns.barplot(
+        data=df_avg,
+        x='iteration',
+        y='best_accuracy',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        edgecolor='black',
+        linewidth=0.8
+    )
+    plt.title('Average Accuracy Progression (Bar Chart)', pad=20)
+    plt.xlabel('Experiment Iteration', labelpad=10)
+    plt.ylabel('Average Eval Accuracy (All Datasets)', labelpad=10)
+    plt.ylim(0, 1.15)
+    plt.legend(title='Configuration', bbox_to_anchor=(1.02, 1), loc='upper left')
+    
+    for p in ax.patches:
+        height = p.get_height()
+        if height > 0:
+            ax.annotate(f'{height:.3f}',
+                        (p.get_x() + p.get_width() / 2., height),
+                        ha='center', va='bottom',
+                        fontsize=8, xytext=(0, 3),
+                        textcoords='offset points')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'overall_accuracy_progression_bar.png'), dpi=300)
+    plt.close()
+
+    # 6. Progression of Training Time (Bar Plot)
+    df_avg_time = df_avg.copy()
+    df_avg_time['total_time_minutes'] = df_avg_time['total_time'] / 60.0
+    
+    plt.figure(figsize=(10, 6))
+    ax = sns.barplot(
+        data=df_avg_time,
+        x='iteration',
+        y='total_time_minutes',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        edgecolor='black',
+        linewidth=0.8
+    )
+    plt.title('Average Training Time Progression (Bar Chart)', pad=20)
+    plt.xlabel('Experiment Iteration', labelpad=10)
+    plt.ylabel('Average Training Time (Minutes)', labelpad=10)
+    plt.legend(title='Configuration', bbox_to_anchor=(1.02, 1), loc='upper left')
+    
+    for p in ax.patches:
+        height = p.get_height()
+        if height > 0:
+            ax.annotate(f'{height:.1f}m',
+                        (p.get_x() + p.get_width() / 2., height),
+                        ha='center', va='bottom',
+                        fontsize=8, xytext=(0, 3),
+                        textcoords='offset points')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'overall_time_progression_bar.png'), dpi=300)
     plt.close()
 
 def main():
