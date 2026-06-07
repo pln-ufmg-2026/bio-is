@@ -35,6 +35,12 @@ CONFIG_COLORS = {
     'CL+IS (drop3)': '#7C3AED'       # Purple
 }
 
+# Iterations to analyze
+ITERATIONS = [
+    #'iter0', 'iter1', 
+    'iter2', 
+    'iter3', 'iter4']
+
 def parse_filename(filename):
     """
     Parses a filename to extract the dataset name and the instance selection algorithm.
@@ -82,10 +88,9 @@ def load_results(results_dir='results'):
     summary_records = []
     epoch_records = []
     
-    iterations = ['iter0', 'iter1', 'iter2', 'iter3', 'iter4']
     setups = ['FT', 'IS', 'CL+IS']
     
-    for iter_name in iterations:
+    for iter_name in ITERATIONS:
         iter_path = os.path.join(results_dir, iter_name)
         if not os.path.isdir(iter_path):
             print(f"Directory {iter_path} not found. Skipping...")
@@ -386,7 +391,7 @@ def plot_overall_comparisons(df_summary, output_dir):
     }).reset_index()
     
     # Standardize iteration ordering
-    iter_order = {'iter0': 0, 'iter1': 1, 'iter2': 2}
+    iter_order = {iter_name: idx for idx, iter_name in enumerate(ITERATIONS)}
     df_avg['iter_idx'] = df_avg['iteration'].map(iter_order)
     df_avg = df_avg.sort_values('iter_idx')
     
@@ -472,7 +477,7 @@ def main():
     print(f"Aggregated epoch records for {len(df_epochs)} rows.")
     
     # Generate subplots per iteration
-    for iter_name in ['iter0', 'iter1', 'iter2']:
+    for iter_name in ITERATIONS:
         print(f"Generating plots for {iter_name}...")
         iter_dir = os.path.join('plots', iter_name)
         os.makedirs(iter_dir, exist_ok=True)
@@ -484,14 +489,15 @@ def main():
     os.makedirs('plots/overall', exist_ok=True)
     plot_overall_comparisons(df_summary, 'plots/overall')
     
-    print("\n--- Summary Performance Table (iter2) ---")
-    df_iter2 = df_summary[df_summary['iteration'] == 'iter2']
-    if not df_iter2.empty:
-        pivot_f1 = df_iter2.pivot(index='config', columns='dataset', values='best_f1')
+    latest_iter = ITERATIONS[-1]
+    print(f"\n--- Summary Performance Table ({latest_iter}) ---")
+    df_latest = df_summary[df_summary['iteration'] == latest_iter]
+    if not df_latest.empty:
+        pivot_f1 = df_latest.pivot(index='config', columns='dataset', values='best_f1')
         print("\nEval F1 Scores:")
         print(pivot_f1.to_string())
         
-        pivot_time = df_iter2.pivot(index='config', columns='dataset', values='total_time')
+        pivot_time = df_latest.pivot(index='config', columns='dataset', values='total_time')
         print("\nTraining Time (Seconds):")
         print(pivot_time.to_string())
         
