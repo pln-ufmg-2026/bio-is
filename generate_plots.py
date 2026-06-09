@@ -638,6 +638,112 @@ def plot_overall_comparisons(df_summary, output_dir):
     plt.savefig(os.path.join(output_dir, 'overall_time_progression_bar.png'), dpi=300)
     plt.close()
 
+    # 7. Progression of F1 (Box Plot)
+    plt.figure(figsize=(12, 7))
+    sns.boxplot(
+        data=df_summary,
+        x='iteration',
+        y='best_f1',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        linewidth=1.2,
+        fliersize=0
+    )
+    sns.swarmplot(
+        data=df_summary,
+        x='iteration',
+        y='best_f1',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        dodge=True,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8
+    )
+    plt.title('Distribution of F1 Scores across Iterations', pad=20)
+    plt.xlabel('Experiment Iteration', labelpad=10)
+    plt.ylabel('Eval F1 Score', labelpad=10)
+    plt.ylim(0, 1.05)
+    handles, labels = plt.gca().get_legend_handles_labels()
+    plt.legend(handles[:len(configs)], labels[:len(configs)], title='Configuration', bbox_to_anchor=(1.02, 1), loc='upper left')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'overall_f1_progression_box.png'), dpi=300)
+    plt.close()
+
+    # 8. Progression of Accuracy (Box Plot)
+    plt.figure(figsize=(12, 7))
+    sns.boxplot(
+        data=df_summary,
+        x='iteration',
+        y='best_accuracy',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        linewidth=1.2,
+        fliersize=0
+    )
+    sns.swarmplot(
+        data=df_summary,
+        x='iteration',
+        y='best_accuracy',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        dodge=True,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8
+    )
+    plt.title('Distribution of Accuracy Scores across Iterations', pad=20)
+    plt.xlabel('Experiment Iteration', labelpad=10)
+    plt.ylabel('Eval Accuracy Score', labelpad=10)
+    plt.ylim(0, 1.05)
+    handles, labels = plt.gca().get_legend_handles_labels()
+    plt.legend(handles[:len(configs)], labels[:len(configs)], title='Configuration', bbox_to_anchor=(1.02, 1), loc='upper left')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'overall_accuracy_progression_box.png'), dpi=300)
+    plt.close()
+
+    # 9. Progression of Training Time (Box Plot)
+    plt.figure(figsize=(12, 7))
+    df_summary_time = df_summary.copy()
+    df_summary_time['total_time_minutes'] = df_summary_time['total_time'] / 60.0
+    sns.boxplot(
+        data=df_summary_time,
+        x='iteration',
+        y='total_time_minutes',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        linewidth=1.2,
+        fliersize=0
+    )
+    sns.swarmplot(
+        data=df_summary_time,
+        x='iteration',
+        y='total_time_minutes',
+        hue='config',
+        hue_order=configs,
+        palette=CONFIG_COLORS,
+        dodge=True,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8
+    )
+    plt.title('Distribution of Training Times across Iterations', pad=20)
+    plt.xlabel('Experiment Iteration', labelpad=10)
+    plt.ylabel('Training Time (Minutes)', labelpad=10)
+    handles, labels = plt.gca().get_legend_handles_labels()
+    plt.legend(handles[:len(configs)], labels[:len(configs)], title='Configuration', bbox_to_anchor=(1.02, 1), loc='upper left')
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'overall_time_progression_box.png'), dpi=300)
+    plt.close()
+
 def main():
     print("Loading results and crawling CSVs...")
     df_summary, df_epochs = load_results()
