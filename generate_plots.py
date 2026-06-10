@@ -35,6 +35,13 @@ CONFIG_COLORS = {
     'CL+IS (drop3)': '#7C3AED'       # Purple
 }
 
+# Color palette definition for the 3 experiment types (setups)
+SETUP_COLORS = {
+    'FT': '#2D3748',      # Dark Slate Grey
+    'IS': '#0D9488',      # Teal
+    'CL+IS': '#7C3AED'    # Purple
+}
+
 # Iterations to analyze
 ITERATIONS = [
     #'iter0', 'iter1', 
@@ -742,6 +749,211 @@ def plot_overall_comparisons(df_summary, output_dir):
     plt.legend(handles[:len(configs)], labels[:len(configs)], title='Configuration', bbox_to_anchor=(1.02, 1), loc='upper left')
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, 'overall_time_progression_box.png'), dpi=300)
+    plt.close()
+
+    # 10. Summary F1 Box Plot (aggregated iterations)
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(
+        data=df_summary,
+        x='config',
+        y='best_f1',
+        hue='config',
+        order=configs,
+        palette=CONFIG_COLORS,
+        linewidth=1.2,
+        fliersize=0,
+        legend=False
+    )
+    sns.swarmplot(
+        data=df_summary,
+        x='config',
+        y='best_f1',
+        hue='config',
+        order=configs,
+        palette=CONFIG_COLORS,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8,
+        legend=False
+    )
+    plt.title('Overall F1 Score Distribution (Aggregated Iterations)', pad=20)
+    plt.xlabel('Configuration', labelpad=10)
+    plt.ylabel('Eval F1 Score', labelpad=10)
+    plt.ylim(0, 1.05)
+    plt.xticks(rotation=15)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'summary_f1_boxplot.png'), dpi=300)
+    plt.close()
+
+    # 11. Summary Accuracy Box Plot (aggregated iterations)
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(
+        data=df_summary,
+        x='config',
+        y='best_accuracy',
+        hue='config',
+        order=configs,
+        palette=CONFIG_COLORS,
+        linewidth=1.2,
+        fliersize=0,
+        legend=False
+    )
+    sns.swarmplot(
+        data=df_summary,
+        x='config',
+        y='best_accuracy',
+        hue='config',
+        order=configs,
+        palette=CONFIG_COLORS,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8,
+        legend=False
+    )
+    plt.title('Overall Accuracy Distribution (Aggregated Iterations)', pad=20)
+    plt.xlabel('Configuration', labelpad=10)
+    plt.ylabel('Eval Accuracy Score', labelpad=10)
+    plt.ylim(0, 1.05)
+    plt.xticks(rotation=15)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'summary_accuracy_boxplot.png'), dpi=300)
+    plt.close()
+
+    # 12. Summary Training Time Box Plot (aggregated iterations)
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(
+        data=df_summary_time,
+        x='config',
+        y='total_time_minutes',
+        hue='config',
+        order=configs,
+        palette=CONFIG_COLORS,
+        linewidth=1.2,
+        fliersize=0,
+        legend=False
+    )
+    sns.swarmplot(
+        data=df_summary_time,
+        x='config',
+        y='total_time_minutes',
+        hue='config',
+        order=configs,
+        palette=CONFIG_COLORS,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8,
+        legend=False
+    )
+    plt.title('Overall Training Time Distribution (Aggregated Iterations)', pad=20)
+    plt.xlabel('Configuration', labelpad=10)
+    plt.ylabel('Training Time (Minutes)', labelpad=10)
+    plt.xticks(rotation=15)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'summary_time_boxplot.png'), dpi=300)
+    plt.close()
+
+    # 13. Summary F1 Box Plot by Experiment Type (aggregated iterations)
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(
+        data=df_summary,
+        x='setup',
+        y='best_f1',
+        hue='setup',
+        order=['FT', 'IS', 'CL+IS'],
+        palette=SETUP_COLORS,
+        linewidth=1.2,
+        fliersize=0,
+        legend=False
+    )
+    sns.swarmplot(
+        data=df_summary,
+        x='setup',
+        y='best_f1',
+        hue='setup',
+        order=['FT', 'IS', 'CL+IS'],
+        palette=SETUP_COLORS,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8,
+        legend=False
+    )
+    plt.title('Overall F1 Score Distribution by Experiment Type (Aggregated Iterations)', pad=20)
+    plt.xlabel('Experiment Type (Setup)', labelpad=10)
+    plt.ylabel('Eval F1 Score', labelpad=10)
+    plt.ylim(0, 1.05)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'experiment_f1_boxplot.png'), dpi=300)
+    plt.close()
+
+    # 14. Summary Accuracy Box Plot by Experiment Type (aggregated iterations)
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(
+        data=df_summary,
+        x='setup',
+        y='best_accuracy',
+        hue='setup',
+        order=['FT', 'IS', 'CL+IS'],
+        palette=SETUP_COLORS,
+        linewidth=1.2,
+        fliersize=0,
+        legend=False
+    )
+    sns.swarmplot(
+        data=df_summary,
+        x='setup',
+        y='best_accuracy',
+        hue='setup',
+        order=['FT', 'IS', 'CL+IS'],
+        palette=SETUP_COLORS,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8,
+        legend=False
+    )
+    plt.title('Overall Accuracy Distribution by Experiment Type (Aggregated Iterations)', pad=20)
+    plt.xlabel('Experiment Type (Setup)', labelpad=10)
+    plt.ylabel('Eval Accuracy Score', labelpad=10)
+    plt.ylim(0, 1.05)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'experiment_accuracy_boxplot.png'), dpi=300)
+    plt.close()
+
+    # 15. Summary Training Time Box Plot by Experiment Type (aggregated iterations)
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(
+        data=df_summary_time,
+        x='setup',
+        y='total_time_minutes',
+        hue='setup',
+        order=['FT', 'IS', 'CL+IS'],
+        palette=SETUP_COLORS,
+        linewidth=1.2,
+        fliersize=0,
+        legend=False
+    )
+    sns.swarmplot(
+        data=df_summary_time,
+        x='setup',
+        y='total_time_minutes',
+        hue='setup',
+        order=['FT', 'IS', 'CL+IS'],
+        palette=SETUP_COLORS,
+        edgecolor='black',
+        linewidth=0.5,
+        size=5,
+        alpha=0.8,
+        legend=False
+    )
+    plt.title('Overall Training Time Distribution by Experiment Type (Aggregated Iterations)', pad=20)
+    plt.xlabel('Experiment Type (Setup)', labelpad=10)
+    plt.ylabel('Training Time (Minutes)', labelpad=10)
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_dir, 'experiment_time_boxplot.png'), dpi=300)
     plt.close()
 
 def main():
